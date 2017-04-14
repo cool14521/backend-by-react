@@ -1,0 +1,47 @@
+.logo {
+    height: 32px;
+    background: #333;
+    border-radius: 6px;
+    margin: 16px;
+}
+
+.contentWrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.content{
+    padding: 24px; 
+    background: #fff; 
+    flex: 1;
+    //overflow: scroll;
+}
+
+:global(.ant-layout-sider-collapsed) :global(.anticon) {
+    font-size: 16px;
+    margin-left: 8px;
+}
+
+:global(.ant-layout-sider-collapsed) :global(.nav-text) {
+    display: none;
+}
+
+:global(.ant-layout-sider-collapsed) :global(.ant-menu-submenu-vertical)> :global(.ant-menu-submenu-title) {
+    &:after {
+        display: none;
+    }
+}
+
+:global(.ant-layout) {
+    height: 100%;
+}
+
+:global(.ant-layout-header){
+    height: 40px;
+    background: #404040;
+    padding: 0;
+}
+
+:global(.ant-layout-footer){
+    padding: 20px;
+}
