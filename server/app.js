@@ -33,9 +33,9 @@ app.use(hotMiddleware(compile, {
 }))
 
 
-// router.get('/favicon.ico', (ctx, next) => {
-// 	ctx.body = null
-// })
+router.get('/favicon.ico', (ctx, next) => {
+	ctx.body = null
+})
 
 //渲染页面
 router.get('*', async (ctx, next) => {

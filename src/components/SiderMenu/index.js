@@ -1,7 +1,7 @@
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
 import { observer, inject } from 'mobx-react'
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 const SubMenu = Menu.SubMenu
 
@@ -10,12 +10,12 @@ const SubMenu = Menu.SubMenu
 class SiderMenu extends Component {
 
 
-  togglePage(e) {
+  onSiderClick(e) {
     const { appStore, history } = this.props
     const url = e.key.split('-')[1]
     if (e.key.split('-')[0] === appStore.siderSelectedInfo.key && history.location.pathname !== '/') return
-    appStore.onSiderClick(e)
     history.push(url)
+    appStore.onSiderClick(e)
   }
 
 
@@ -29,7 +29,7 @@ class SiderMenu extends Component {
         mode={appStore.siderMode}
         defaultSelectedKeys={['用户管理-/users']}
         defaultOpenKeys={['数据管理']}
-        onClick={this.togglePage.bind(this)}
+        onClick={this.onSiderClick.bind(this)}
       >
         <SubMenu
           key="数据管理"

@@ -2,7 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { useStrict } from 'MobX'
 import { Provider } from 'mobx-react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
+import moment from 'moment'
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn')
 
 import App from './components/App'
 
@@ -15,9 +18,9 @@ useStrict(true)
 
 ReactDOM.render(
   <Provider {...stores}>
-    <BrowserRouter basename="/">
+    <Router basename="/">
       <App />
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById('root')
 )

@@ -1,20 +1,23 @@
 .logo {
     height: 32px;
-    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
     border-radius: 6px;
     margin: 16px;
 }
 
-.contentWrapper{
+.contentWrapper {
     display: flex;
     flex-direction: column;
 }
 
-.content{
-    padding: 24px; 
-    background: #fff; 
+.content {
+    background: #fff;
     flex: 1;
-    //overflow: scroll;
+    //overflow: auto;
 }
 
 :global(.ant-layout-sider-collapsed) :global(.anticon) {
@@ -34,14 +37,15 @@
 
 :global(.ant-layout) {
     height: 100%;
+    background: #fff;
 }
 
-:global(.ant-layout-header){
+:global(.ant-layout-header) {
     height: 40px;
     background: #404040;
     padding: 0;
 }
 
-:global(.ant-layout-footer){
+:global(.ant-layout-footer) {
     padding: 20px;
 }

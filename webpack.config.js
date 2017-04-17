@@ -16,7 +16,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',//打包后的文件名
     path: path.join(__dirname, 'dist'),//打包后的文件存储位置
-    publicPath: '/dist'
+    publicPath: '/dist/'
   },
 
   resolve: {
