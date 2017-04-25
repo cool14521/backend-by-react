@@ -33,6 +33,23 @@ app.use(hotMiddleware(compile, {
 }))
 
 
+router.post('/users', (ctx, next) => {
+	ctx.body = [{
+		name: 'tom',
+		age: 23
+	}]
+})
+
+router.post('/login', async (ctx, next) => {
+	await new Promise((resolve, reject) => {
+		setTimeout(resolve, 3000)
+	})
+	ctx.body = {
+		errorcode: 0,
+		errormsg: '登录成功'
+	}
+})
+
 router.get('/favicon.ico', (ctx, next) => {
 	ctx.body = null
 })

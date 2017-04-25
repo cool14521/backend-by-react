@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import OperationBar from '../OperationBar'
+import OperationBar from '../../components/Layout/OperationBar'
 import { Button, Row, Form, Input, Select, Layout } from 'antd'
-import styles from './index.less'
+import styles from './UmbrellaEdit.less'
 
 const FormItem = Form.Item
 

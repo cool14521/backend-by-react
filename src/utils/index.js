@@ -25,3 +25,14 @@ export const debounce = method => {
  * 识别是否为微信浏览器
  */
 export const isWeixinBrowser = () => /micromessenger/.test(navigator.userAgent.toLowerCase())
+
+/**
+ * 面包屑配置
+ */
+export const breadConfig = {
+  '/users': ['数据管理', '用户管理', '用户数据'],
+  '/umbrellas': ['数据管理', '雨伞管理', '雨伞数据'],
+  '/umbrellasEdit': ['数据管理', '雨伞管理', '编辑雨伞'],
+  '/networks': ['数据管理', '网点管理', '网点数据'],
+  '/distribution': ['数据管理', '分配管理', '分配数据']
+}

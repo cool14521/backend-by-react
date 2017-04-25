@@ -1,70 +1,36 @@
-import fetch from 'isomorphic-fetch'
-import { API_PATH } from '../utils'
-import FormData from 'form-data'
+import axios from 'axios'
+import qs from 'qs'
+import { API_PATH } from '../constants'
+import appStore from '../stores/appStore'
 
-function parseJSON(response) {
-  return response.json()
-}
+axios.defaults.timeout = 5000
+axios.defaults.baseURL = API_PATH
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response
+//请求拦截
+axios.interceptors.request.use(
+  config => {
+    if (config.method === 'post' && config.data) {
+      config.data = qs.stringify(config.data)
+    }
+    //config.withCredentials = true  // 需要跨域打开此配置
+    appStore.showLoading()
+    return config
+  },
+  error => {
+    return Promise.reject(error)
   }
-  let error = new Error()
-  error.name = response.status
-  error.message = response.statusText
-  error.response = response
-  throw error
-}
+)
 
-function checkApiStatus(response) {
-
-  if (response.errorcode == 0) return response
-  let error = new Error()
-  error.name = response.errorcode
-  error.message = response.errormsg
-  error.response = response
-  throw error
-}
-
-function timeout(ms, promise) {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-
-      let e = new Error()
-      e.name = -1
-      e.message = "Connection timeout, please check your internet connection and try again"
-
-      reject(e)
-
-    }, ms)
-    promise.then(resolve, reject)
-  })
-}
-
-export default async function request(url, options) {
-
-  options = process.env.NODE_ENV === 'development' ? options : { ...options, credentials: 'include' }
-
-  const response = await timeout(10000, fetch(`${API_PATH}${url}`, options))
-
-  checkStatus(response)
-
-  const data = await response.json()
-
-  checkApiStatus(data)
-
-  return data
-}
-
-export function objectToFormData(item) {
-
-  let form_data = new FormData()
-
-  for (var key in item) {
-    form_data.append(key, item[key])
+//响应拦截
+axios.interceptors.response.use(
+  response => {
+    appStore.hideLoading()
+    return response.data
+  },
+  error => {
+    return Promise.reject(error)
   }
+)
 
-  return form_data
-
-}
+export default axios

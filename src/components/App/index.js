@@ -3,36 +3,60 @@ import React, { Component } from 'react'
 import styles from './index.less'
 import { Button } from 'antd'
 import { observer, inject } from 'mobx-react'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
-import Login from '../Login'
-import SiderMenu from '../SiderMenu'
-import Network from '../Network'
-import Distribution from '../Distribution'
-import Umbrella from '../Umbrella'
-import UmbrellaEdit from '../UmbrellaEdit'
-import User from '../User'
-
-
-
-import { debounce } from '../../utils'
+import Login from '../../components/Layout/Login'
+import SiderMenu from '../../components/Layout/SiderMenu'
+import Network from '../Network/Network'
+import NetworkEdit from '../Network/Network'
+import Distribution from '../Distribution/Distribution'
+import DistributionEdit from '../Distribution/DistributionEdit'
+import Umbrella from '../Umbrella/Umbrella'
+import UmbrellaEdit from '../Umbrella/UmbrellaEdit'
+import User from '../User/User'
+import { breadConfig } from '../../utils'
+import request from '../../utils/request'
 
 const { Header, Content, Sider } = Layout
 
-@inject('appStore') @observer
+/**
+ * 面包屑
+ */
+const Bread = inject('appStore')(withRouter((observer(({ history }) => {
+  let breadInfo = breadConfig[Object.keys(breadConfig)[Object.keys(breadConfig).indexOf(history.location.pathname)]]
+  if (history.location.pathname === '/') {
+    breadInfo = breadConfig['/users']
+  }
+  return (
+    <Breadcrumb style={{ margin: '12px 0' }}>
+      {breadInfo.map((item, index) => <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>)}
+    </Breadcrumb>
+  )
+}))))
+
+/**
+ * 主程序
+ * 
+ * @class App
+ * @extends {Component}
+ */
+@inject('appStore') @withRouter @observer
 class App extends Component {
 
   constructor(props) {
     super(props)
-    window.onresize = () => debounce(props.appStore.changeWindowSize)
+    props.history.listen((...args) => {
+      //console.log(args)
+    })
   }
-   
+
+  componentDidMount() {
+
+  }
+
   render() {
-
-    console.log(999)
-
-    const { isLogin, onCollapse, collapsed, siderSelectedInfo } = this.props.appStore
-    const { history } = this.props
+    console.log('App be render')
+    const { isLogin, collapsed, onCollapse } = this.props.appStore
     const pageNode = (
       <Layout>
         <Sider
@@ -43,21 +67,18 @@ class App extends Component {
           <SiderMenu />
         </Sider>
         <Layout>
-          <Header>
-          </Header>
+          <Header></Header>
           <Content style={{ margin: '0 16px' }} className={styles.contentWrapper}>
-            <Breadcrumb style={{ margin: '12px 0' }}>
-              {siderSelectedInfo.keyPath.map((item, index) => <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>)}
-            </Breadcrumb>
+            <Bread />
             <div className={styles.content}>
               <Route exact path="/" component={User} />
               <Route path="/users" component={User} />
-              <Route exact path="/umbrellas" component={Umbrella} />
+              <Route path="/umbrellas" component={Umbrella} />
               <Route path="/umbrellasEdit" component={UmbrellaEdit} />
               <Route path="/networks" component={Network} />
-              <Route path="/networksEdit" component={Network} />
+              <Route path="/networksEdit" component={NetworkEdit} />
               <Route path="/distribution" component={Distribution} />
-              <Route path="/distributionEdit" component={Distribution} />
+              <Route path="/distributionEdit" component={DistributionEdit} />
             </div>
           </Content>
         </Layout>

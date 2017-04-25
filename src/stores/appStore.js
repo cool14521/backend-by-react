@@ -7,10 +7,7 @@ import {
   toJS,
   intercept
 } from "MobX"
-
-
-
-
+import request from '../utils/request'
 
 class appStore {
 
@@ -19,13 +16,11 @@ class appStore {
   @observable
   isLogin
   @observable
-  isSmallScreen
-  @observable
   siderMode
   @observable
   collapsed
   @observable
-  siderSelectedInfo
+  loading
 
   constructor() {
     this.administratorInfo = {
@@ -35,20 +30,7 @@ class appStore {
     this.isLogin = false
     this.collapsed = false
     this.siderMode = 'inline'
-    this.isSmallScreen = document.body.clientWidth < 769
-    this.siderSelectedInfo = {
-      key: '用户管理',
-      keyPath: ['数据管理', '用户管理']
-    }
-    // intercept(this.siderSelectedInfo, 'key', change => {
-    //   console.log(change.newValue + 'dsda')
-    //   return null
-    // })
-  }
-
-  @action.bound
-  changeWindowSize() {
-    this.isSmallScreen = document.body.clientWidth < 769
+    this.loading = false
   }
 
   @action.bound
@@ -57,25 +39,28 @@ class appStore {
     this.siderMode = collapsed ? 'vertical' : 'inline'
   }
 
-  @action.bound
-  onSiderClick(e) {
-    this.siderSelectedInfo = {
-      key: e.key.split('-')[0],
-      keyPath: e.keyPath.map(item => item.split('-')[0]).reverse()
-    }
-  }
-
   @action
-  loginSubmit(validateFieldsAndScroll) {
-    validateFieldsAndScroll((errors, values) => {
-      if (errors) return
-      runInAction(() => { this.isLogin = true })
+  loginSubmit = async values => {
+    const data = await request.post('/login')
+    runInAction(() => {
+      console.log(data)
+      this.isLogin = true
     })
   }
 
   @action
   logout() {
     this.isLogin = false
+  }
+
+  @action
+  showLoading() {
+    this.loading = true
+  }
+
+  @action
+  hideLoading() {
+    this.loading = false
   }
 
 }

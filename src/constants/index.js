@@ -1,1 +1,1 @@
-export const API_PATH = process.env.NODE_ENV === "development" ? 'http://mart1n.ngrok.cc' : ''
+export const API_PATH = process.env.NODE_ENV === "development" ? '' : ''

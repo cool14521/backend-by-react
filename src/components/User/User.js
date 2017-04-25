@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Layout, Icon, Button, Table, DatePicker, Input } from 'antd'
-import OperationBar from '../OperationBar'
+import OperationBar from '../../components/Layout/OperationBar'
 
 const { Content } = Layout
 
