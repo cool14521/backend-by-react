@@ -2,12 +2,12 @@ import {
   observable,
   action,
   computed,
-  useStrict,
   runInAction,
   toJS,
   intercept
-} from "MobX"
-import request from '../utils/request'
+} from "mobx"
+
+import { login } from '../services/app'
 
 class appStore {
 
@@ -41,7 +41,7 @@ class appStore {
 
   @action
   loginSubmit = async values => {
-    const data = await request.post('/login')
+    const data = await login(values)
     runInAction(() => {
       console.log(data)
       this.isLogin = true

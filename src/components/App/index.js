@@ -3,17 +3,17 @@ import React, { Component } from 'react'
 import styles from './index.less'
 import { Button } from 'antd'
 import { observer, inject } from 'mobx-react'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
-import Login from '../../components/Layout/Login'
-import SiderMenu from '../../components/Layout/SiderMenu'
-import Network from '../Network/Network'
-import NetworkEdit from '../Network/Network'
-import Distribution from '../Distribution/Distribution'
-import DistributionEdit from '../Distribution/DistributionEdit'
-import Umbrella from '../Umbrella/Umbrella'
-import UmbrellaEdit from '../Umbrella/UmbrellaEdit'
-import User from '../User/User'
+import Login from '../../components/Layout/Login.js'
+import SiderMenu from '../../components/Layout/SiderMenu.js'
+import Network from '../Network/Network.js'
+import NetworkEdit from '../Network/NetworkEdit.js'
+import Distribution from '../Distribution/Distribution.js'
+import DistributionEdit from '../Distribution/DistributionEdit.js'
+import Umbrella from '../Umbrella/Umbrella.js'
+import UmbrellaEdit from '../Umbrella/UmbrellaEdit.js'
+import User from '../User/User.js'
 import { breadConfig } from '../../utils'
 import request from '../../utils/request'
 
@@ -50,10 +50,6 @@ class App extends Component {
     })
   }
 
-  componentDidMount() {
-
-  }
-
   render() {
     console.log('App be render')
     const { isLogin, collapsed, onCollapse } = this.props.appStore
@@ -71,14 +67,16 @@ class App extends Component {
           <Content style={{ margin: '0 16px' }} className={styles.contentWrapper}>
             <Bread />
             <div className={styles.content}>
-              <Route exact path="/" component={User} />
-              <Route path="/users" component={User} />
-              <Route path="/umbrellas" component={Umbrella} />
-              <Route path="/umbrellasEdit" component={UmbrellaEdit} />
-              <Route path="/networks" component={Network} />
-              <Route path="/networksEdit" component={NetworkEdit} />
-              <Route path="/distribution" component={Distribution} />
-              <Route path="/distributionEdit" component={DistributionEdit} />
+              <Switch>
+                <Route exact path="/" component={User} />
+                <Route path="/users" component={User} />
+                <Route path="/umbrellas" component={Umbrella} />
+                <Route path="/umbrellasEdit" component={UmbrellaEdit} />
+                <Route path="/networks" component={Network} />
+                <Route path="/networksEdit" component={NetworkEdit} />
+                <Route path="/distribution" component={Distribution} />
+                <Route path="/distributionEdit" component={DistributionEdit} />
+              </Switch>
             </div>
           </Content>
         </Layout>

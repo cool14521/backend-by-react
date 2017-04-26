@@ -5,12 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const themeConfig = require('./src/theme')
 
-
-const svgDirs = [
-  require.resolve('antd-mobile').replace(/warn\.js$/, ''),  // 1. 属于 antd-mobile 内置 svg 文件
-  path.resolve(__dirname, 'src/assets'),  // 2. 自己私人的 svg 存放目录
-]
-
 module.exports = {
   entry: {
     main: './src/index.js',//入口文件
@@ -25,10 +19,10 @@ module.exports = {
     publicPath: '/'
   },
 
-  resolve: {
-    modules: ['node_modules'],
-    extensions: ['.web.js', '.jsx', '.js', '.json']
-  },
+  // resolve: {
+  //   modules: ['node_modules'],
+  //   extensions: ['.web.js', '.jsx', '.js', '.json']
+  // },
 
   //devtool: 'cheap-module-eval-source-map',//生产环境需关闭该功能,否则打包后体积会变大
 
@@ -63,13 +57,8 @@ module.exports = {
         })
       },
       {
-        test: /\.(jpe?g|png|gif|mp4|webm|woff|otf|webp)$/,
+        test: /\.(jpe?g|png|gif|mp4|webm|woff|otf|webp|svg)$/,
         use: 'url-loader'
-      },
-      {
-        test: /\.(svg)$/i,
-        use: 'svg-sprite-loader',
-        include: svgDirs,  // 把 svgDirs 路径下的所有 svg 文件交给 svg-sprite-loader 插件处理
       }
     ],
   },

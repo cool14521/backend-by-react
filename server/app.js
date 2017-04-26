@@ -32,18 +32,12 @@ app.use(hotMiddleware(compile, {
 	// heartbeat: 10 * 1000
 }))
 
-
-router.post('/users', (ctx, next) => {
-	ctx.body = [{
-		name: 'tom',
-		age: 23
-	}]
-})
-
+//模拟登录接口
 router.post('/login', async (ctx, next) => {
 	await new Promise((resolve, reject) => {
 		setTimeout(resolve, 3000)
 	})
+	console.log(ctx.request.body)
 	ctx.body = {
 		errorcode: 0,
 		errormsg: '登录成功'

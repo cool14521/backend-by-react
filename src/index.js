@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { useStrict } from 'MobX'
+import { useStrict } from 'mobx'
 import { Provider } from 'mobx-react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import moment from 'moment'
-import 'moment/locale/zh-cn'
-moment.locale('zh-cn')
+// import 'moment/locale/zh-cn'
+// moment.locale('zh-cn')
 
 import App from './components/App'
 

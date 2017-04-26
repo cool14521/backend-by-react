@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Layout, Button, Table, Input, Tag, Select } from 'antd'
-import DropOption from '../../components/Layout/DropOption'
-import OperationBar from '../../components/Layout/OperationBar'
+import DropOption from '../../components/Layout/DropOption.js'
+import OperationBar from '../../components/Layout/OperationBar.js'
 
 const { Content } = Layout
 const Option = Select.Option

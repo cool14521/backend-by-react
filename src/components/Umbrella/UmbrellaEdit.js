@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
-import OperationBar from '../../components/Layout/OperationBar'
+import OperationBar from '../../components/Layout/OperationBar.js'
 import { Button, Row, Form, Input, Select, Layout } from 'antd'
 import styles from './UmbrellaEdit.less'
 
