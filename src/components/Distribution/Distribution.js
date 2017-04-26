@@ -69,7 +69,7 @@ class Distribution extends Component {
     return (
       <Layout>
         <OperationBar>
-          <Button type="danger" icon="check">确认入库</Button>
+          <Button type="primary" icon="check">确认入库</Button>
           <label>网点：</label>
           <Select defaultValue="0" style={{ width: 200 }}>
             <Option value="0">请选择网点</Option>

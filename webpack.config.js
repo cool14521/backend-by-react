@@ -66,7 +66,6 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       options: {
         postcss: () => [autoprefixer],//css样式及设备适配处理
-        babel: { presets: ['react-hmre'] },//react热加载处理
         url: { limit: 10240 }
       }
     })

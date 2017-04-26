@@ -13,28 +13,28 @@ class SiderMenu extends Component {
 
 
   onSiderClick(e) {
-    const { history } = this.props
-    if (history.location.pathname === e.key) return
+    const { location, history } = this.props
+    if (location.pathname === e.key) return
     history.push(e.key)
   }
 
 
   render() {
 
-    const { appStore, history } = this.props
+    const { appStore, location } = this.props
 
     let defaultSelectedKeys = ''
     switch (true) {
-      case['/', '/users'].indexOf(history.location.pathname) !== -1:
+      case['/', '/users'].indexOf(location.pathname) !== -1:
         defaultSelectedKeys = '/users'
         break
-      case['/umbrellas', '/umbrellasEdit'].indexOf(history.location.pathname) !== -1:
+      case['/umbrellas', '/umbrellasEdit'].indexOf(location.pathname) !== -1:
         defaultSelectedKeys = '/umbrellas'
         break
-      case['/networks', '/networksEdit'].indexOf(history.location.pathname) !== -1:
+      case['/networks', '/networksEdit'].indexOf(location.pathname) !== -1:
         defaultSelectedKeys = '/networks'
         break
-      case['/distribution', '/distributionEdit'].indexOf(history.location.pathname) !== -1:
+      case['/distribution', '/distributionEdit'].indexOf(location.pathname) !== -1:
         defaultSelectedKeys = '/distribution'
         break
     }

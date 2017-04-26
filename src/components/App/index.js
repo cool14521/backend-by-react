@@ -22,9 +22,9 @@ const { Header, Content, Sider } = Layout
 /**
  * 面包屑
  */
-const Bread = inject('appStore')(withRouter((observer(({ history }) => {
-  let breadInfo = breadConfig[Object.keys(breadConfig)[Object.keys(breadConfig).indexOf(history.location.pathname)]]
-  if (history.location.pathname === '/') {
+const Bread = inject('appStore')(withRouter((observer(({ location }) => {
+  let breadInfo = breadConfig[Object.keys(breadConfig)[Object.keys(breadConfig).indexOf(location.pathname)]]
+  if (location.pathname === '/') {
     breadInfo = breadConfig['/users']
   }
   return (
@@ -45,9 +45,7 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    props.history.listen((...args) => {
-      //console.log(args)
-    })
+    //props.history.listen((...args) => {})
   }
 
   render() {
