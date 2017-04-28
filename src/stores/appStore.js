@@ -1,11 +1,4 @@
-import {
-  observable,
-  action,
-  computed,
-  runInAction,
-  toJS,
-  intercept
-} from "mobx"
+import { observable, action, computed, runInAction } from "mobx"
 
 import { login } from '../services/app'
 
@@ -41,11 +34,15 @@ class appStore {
 
   @action
   loginSubmit = async values => {
-    const data = await login(values)
-    runInAction(() => {
-      console.log(data)
-      this.isLogin = true
-    })
+    try {
+      const data = await login(values)
+      runInAction(() => {
+        this.isLogin = true
+      })
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 
   @action

@@ -34,6 +34,7 @@ const Bread = inject('appStore')(withRouter((observer(({ location }) => {
   )
 }))))
 
+
 /**
  * 主程序
  * 
@@ -50,16 +51,10 @@ class App extends Component {
 
   render() {
     console.log('App be render')
-    const { isLogin, collapsed, onCollapse } = this.props.appStore
+    const { isLogin } = this.props.appStore
     const pageNode = (
-      <Layout>
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={onCollapse}>
-          <div className={styles.logo}>雨伞分享管理</div>
-          <SiderMenu />
-        </Sider>
+      <Layout className={styles.layoutHasSider}>
+        <SiderMenu />
         <Layout>
           <Header></Header>
           <Content style={{ margin: '0 16px' }} className={styles.contentWrapper}>
