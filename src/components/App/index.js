@@ -22,7 +22,7 @@ const { Header, Content, Sider } = Layout
 /**
  * 面包屑
  */
-const Bread = inject('appStore')(withRouter((observer(({ location }) => {
+const Bread = withRouter((observer(({ location }) => {
   let breadInfo = breadConfig[Object.keys(breadConfig)[Object.keys(breadConfig).indexOf(location.pathname)]]
   if (location.pathname === '/') {
     breadInfo = breadConfig['/users']
@@ -32,7 +32,7 @@ const Bread = inject('appStore')(withRouter((observer(({ location }) => {
       {breadInfo.map((item, index) => <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>)}
     </Breadcrumb>
   )
-}))))
+})))
 
 
 /**
@@ -69,6 +69,7 @@ class App extends Component {
                 <Route path="/networksEdit" component={NetworkEdit} />
                 <Route path="/distribution" component={Distribution} />
                 <Route path="/distributionEdit" component={DistributionEdit} />
+                <Route render={() => <h1>404</h1>} />
               </Switch>
             </div>
           </Content>

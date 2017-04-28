@@ -4,16 +4,11 @@ import { login } from '../services/app'
 
 class appStore {
 
-  @observable
-  administratorInfo
-  @observable
-  isLogin
-  @observable
-  siderMode
-  @observable
-  collapsed
-  @observable
-  loading
+  @observable administratorInfo
+  @observable isLogin
+  @observable siderMode
+  @observable collapsed
+  @observable loading
 
   constructor() {
     this.administratorInfo = {
@@ -26,14 +21,12 @@ class appStore {
     this.loading = false
   }
 
-  @action.bound
-  onCollapse(collapsed) {
+  @action.bound onCollapse(collapsed) {
     this.collapsed = !this.collapsed
     this.siderMode = collapsed ? 'vertical' : 'inline'
   }
 
-  @action
-  loginSubmit = async values => {
+  @action loginSubmit = async values => {
     try {
       const data = await login(values)
       runInAction(() => {
@@ -45,18 +38,15 @@ class appStore {
     }
   }
 
-  @action
-  logout() {
+  @action logout() {
     this.isLogin = false
   }
 
-  @action
-  showLoading() {
+  @action showLoading() {
     this.loading = true
   }
 
-  @action
-  hideLoading() {
+  @action hideLoading() {
     this.loading = false
   }
 
