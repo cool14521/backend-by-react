@@ -19,7 +19,7 @@ class SiderMenu extends Component {
     if (location.pathname === e.key) return
     history.push(e.key)
   }
-  
+
   render() {
 
     const { appStore, location } = this.props
@@ -45,8 +45,8 @@ class SiderMenu extends Component {
         collapsible
         collapsed={appStore.collapsed}
         onCollapse={appStore.onCollapse}
-        >
-        <div className={styles.logo}>雨伞分享管理</div>
+      >
+        <div className={styles.logo} style={{ visibility: appStore.collapsed ? 'hidden' : 'visible' }}>雨伞分享管理</div>
         <Menu
           theme="dark"
           mode={appStore.siderMode}

@@ -18,6 +18,7 @@ import { breadConfig } from '../../utils'
 import request from '../../utils/request'
 
 const { Header, Content, Sider } = Layout
+const SubMenu = Menu.SubMenu
 
 /**
  * 面包屑
@@ -46,17 +47,25 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    //props.history.listen((...args) => {})
   }
 
   render() {
     console.log('App be render')
-    const { isLogin } = this.props.appStore
+    const { isLogin, administratorInfo, logout } = this.props.appStore
     const pageNode = (
       <Layout className={styles.layoutHasSider}>
         <SiderMenu />
         <Layout>
-          <Header></Header>
+          <Header className={styles.header}>
+            <Menu mode="horizontal" onClick={logout}>
+              <SubMenu
+                key="1"
+                title={administratorInfo.name}
+              >
+                <Menu.Item key="2">注销</Menu.Item>
+              </SubMenu>
+            </Menu>
+          </Header>
           <Content style={{ margin: '0 16px' }} className={styles.contentWrapper}>
             <Bread />
             <div className={styles.content}>
@@ -69,14 +78,12 @@ class App extends Component {
                 <Route path="/networksEdit" component={NetworkEdit} />
                 <Route path="/distribution" component={Distribution} />
                 <Route path="/distributionEdit" component={DistributionEdit} />
-                <Route render={() => <h1>404</h1>} />
               </Switch>
             </div>
           </Content>
         </Layout>
       </Layout>
     )
-
     return isLogin ? pageNode : <Login />
   }
 }

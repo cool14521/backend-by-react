@@ -38,7 +38,7 @@ class appStore {
     }
   }
 
-  @action logout() {
+  @action.bound logout() {
     this.isLogin = false
   }
 

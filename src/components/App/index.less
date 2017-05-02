@@ -6,10 +6,13 @@
 .content {
     background: #fff;
     flex: 1;
-    //overflow: auto;
 }
 
-.layoutHasSider{
+.header :global(.ant-menu-root)>li {
+    float: right;
+}
+
+.layoutHasSider {
     flex-direction: row;
 }
 
@@ -34,11 +37,15 @@
 }
 
 :global(.ant-layout-header) {
-    height: 40px;
-    background: #404040;
+    height: 47px;
     padding: 0;
+    background: #fff;
 }
 
 :global(.ant-layout-footer) {
     padding: 20px;
+}
+
+:global(.ant-table-pagination) {
+    float: left !important;
 }
