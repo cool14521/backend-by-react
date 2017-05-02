@@ -4,7 +4,7 @@ import styles from './index.less'
 import { Button } from 'antd'
 import { observer, inject } from 'mobx-react'
 import { Route, withRouter, Switch } from 'react-router-dom'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd'
+import { Layout, Menu, Breadcrumb, Icon, Tabs } from 'antd'
 import Login from '../../components/Layout/Login.js'
 import SiderMenu from '../../components/Layout/SiderMenu.js'
 import Network from '../Network/Network.js'
@@ -14,27 +14,12 @@ import DistributionEdit from '../Distribution/DistributionEdit.js'
 import Umbrella from '../Umbrella/Umbrella.js'
 import UmbrellaEdit from '../Umbrella/UmbrellaEdit.js'
 import User from '../User/User.js'
-import { breadConfig } from '../../utils'
+import { getBreadInfo } from '../../utils'
 import request from '../../utils/request'
 
 const { Header, Content, Sider } = Layout
 const SubMenu = Menu.SubMenu
-
-/**
- * 面包屑
- */
-const Bread = withRouter((observer(({ location }) => {
-  let breadInfo = breadConfig[Object.keys(breadConfig)[Object.keys(breadConfig).indexOf(location.pathname)]]
-  if (location.pathname === '/') {
-    breadInfo = breadConfig['/users']
-  }
-  return (
-    <Breadcrumb style={{ margin: '12px 0' }}>
-      {breadInfo.map((item, index) => <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>)}
-    </Breadcrumb>
-  )
-})))
-
+const TabPane = Tabs.TabPane
 
 /**
  * 主程序
@@ -49,9 +34,40 @@ class App extends Component {
     super(props)
   }
 
+  componentDidMount() {
+    this.props.history.listen((location, type) => {
+      const prePath = this.props.location.pathname
+      const nextPath = location.pathname
+      const { tabBarList, addTab, activeTabChanged } = this.props.appStore
+      if (tabBarList.find((item, index) => item.pathname === nextPath) === undefined && (type === 'PUSH' || type === 'POP')) {
+        if (prePath === '/' && nextPath === '/users') return
+        addTab({ pathname: nextPath, active: true, title: getBreadInfo(nextPath).reverse()[0] })
+      }
+      if (tabBarList.find((item, index) => item.pathname === nextPath) !== undefined) {
+        activeTabChanged(nextPath)
+      }
+    })
+  }
+
+  onTabChange(activeKey) {
+    if (this.props.location.pathname === activeKey) return
+    this.props.history.push(activeKey)
+  }
+
+  onTabEdit(removeKey) {
+    const { removeTab, tabBarList } = this.props.appStore
+    const activeTab = tabBarList.find((item, index) => item.active === true)
+    if (tabBarList.length === 1) return
+    removeTab(removeKey)
+    if (removeKey === activeTab.pathname) {
+      this.props.history.push(tabBarList[tabBarList.length - 1].pathname)
+    }
+  }
+
   render() {
     console.log('App be render')
-    const { isLogin, administratorInfo, logout } = this.props.appStore
+    const { isLogin, administratorInfo, logout, tabBarList } = this.props.appStore
+    const activeTab = tabBarList.find((item, index) => item.active === true)
     const pageNode = (
       <Layout className={styles.layoutHasSider}>
         <SiderMenu />
@@ -66,21 +82,33 @@ class App extends Component {
               </SubMenu>
             </Menu>
           </Header>
-          <Content style={{ margin: '0 16px' }} className={styles.contentWrapper}>
-            <Bread />
-            <div className={styles.content}>
-              <Switch>
-                <Route exact path="/" component={User} />
-                <Route path="/users" component={User} />
-                <Route path="/umbrellas" component={Umbrella} />
-                <Route path="/umbrellasEdit" component={UmbrellaEdit} />
-                <Route path="/networks" component={Network} />
-                <Route path="/networksEdit" component={NetworkEdit} />
-                <Route path="/distribution" component={Distribution} />
-                <Route path="/distributionEdit" component={DistributionEdit} />
-              </Switch>
-            </div>
-          </Content>
+          <Tabs hideAdd type="editable-card" activeKey={activeTab.pathname} onChange={this.onTabChange.bind(this)} onEdit={this.onTabEdit.bind(this)}>
+            {
+              tabBarList.map((item, index) => {
+                return (
+                  <TabPane tab={item.title} key={item.pathname} >
+                    <Content style={{ margin: '0 16px' }} className={styles.contentWrapper}>
+                      <Breadcrumb style={{ margin: '12px 0' }}>
+                        {getBreadInfo(this.props.location.pathname).map((item, index) => <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>)}
+                      </Breadcrumb>
+                      <div className={styles.content}>
+                        <Switch>
+                          <Route exact path="/" component={User} />
+                          <Route path="/users" component={User} />
+                          <Route path="/umbrellas" component={Umbrella} />
+                          <Route path="/umbrellasEdit" component={UmbrellaEdit} />
+                          <Route path="/networks" component={Network} />
+                          <Route path="/networksEdit" component={NetworkEdit} />
+                          <Route path="/distribution" component={Distribution} />
+                          <Route path="/distributionEdit" component={DistributionEdit} />
+                        </Switch>
+                      </div>
+                    </Content>
+                  </TabPane>
+                )
+              })
+            }
+          </Tabs>
         </Layout>
       </Layout>
     )
