@@ -27,8 +27,8 @@ class App extends Component {
 
   componentDidMount() {
     // preloads the rest
-    lazyLogin(() => {})
-    lazyMain(() => {})
+    // lazyLogin(() => {})
+    // lazyMain(() => {})
   }
 
   render() {

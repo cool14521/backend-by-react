@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import {Spin} from 'antd'
+import styles from './Bundle.less'
 
 class Bundle extends Component {
   state = {
@@ -29,7 +31,7 @@ class Bundle extends Component {
   }
 
   render() {
-    return this.state.mod ? this.props.children(this.state.mod) : <h1>loading...</h1>
+    return this.state.mod ? this.props.children(this.state.mod) : <div className={styles.loading}><Spin size="large" /></div>
   }
 }
 
