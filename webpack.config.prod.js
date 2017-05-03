@@ -14,7 +14,8 @@ module.exports = {
     ]//分离第三方库
   },
   output: {
-    filename: '[chunkhash].[name].js',//打包后的文件名
+    filename: '[name].[chunkhash:5].js',//打包后的文件名
+    chunkFilename: '[name].[chunkhash:5].js',
     path: path.join(__dirname, 'dist'),//打包后的文件存储位置
     publicPath: '/'
   },
@@ -74,8 +75,10 @@ module.exports = {
       template: './src/views/index.html'
     }),
     new ExtractTextPlugin({
-      filename: 'style.css',
-
+      filename:(getPath) => {
+        return getPath('[name].css').replace('dist/js', 'css')
+      },
+      allChunks:true
     }),//提取css文件
     new webpack.LoaderOptionsPlugin({
       options: {

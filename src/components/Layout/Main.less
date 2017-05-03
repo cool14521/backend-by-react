@@ -1,15 +1,25 @@
 .contentWrapper {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .content {
     background: #fff;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .header :global(.ant-menu-root)>li {
     float: right;
+    margin-right: 16px;
+}
+
+.noMatch {
+    text-align: center;
+    font-size: 60px;
 }
 
 .layoutHasSider {

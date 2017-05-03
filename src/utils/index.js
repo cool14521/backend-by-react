@@ -37,9 +37,9 @@ export const getBreadInfo = (url) => {
     '/networks': ['数据管理', '网点管理', '网点数据'],
     '/distribution': ['数据管理', '分配管理', '分配数据']
   }
-  let breadInfo = breadConfig[Object.keys(breadConfig)[Object.keys(breadConfig).indexOf(url)]]
+  let breadInfo = breadConfig[Object.keys(breadConfig).find((item, index) => item === url)]
   if (url === '/') {
     breadInfo = breadConfig['/users']
   }
-  return breadInfo
+  return breadInfo ? breadInfo : []
 }

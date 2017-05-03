@@ -1,38 +1,24 @@
 import React, { Component } from 'react'
-//import DevTools from 'mobx-react-devtools'
-import styles from './index.less'
-import { Button } from 'antd'
 import { observer, inject } from 'mobx-react'
 import { Route, withRouter, Switch } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Icon, Tabs } from 'antd'
-import Login from '../../components/Layout/Login.js'
-import SiderMenu from '../../components/Layout/SiderMenu.js'
-import Network from '../Network/Network.js'
-import NetworkEdit from '../Network/NetworkEdit.js'
-import Distribution from '../Distribution/Distribution.js'
-import DistributionEdit from '../Distribution/DistributionEdit.js'
-import Umbrella from '../Umbrella/Umbrella.js'
-import UmbrellaEdit from '../Umbrella/UmbrellaEdit.js'
-import User from '../User/User.js'
+import SiderMenu from './SiderMenu'
+import Network from '../Network/Network'
+import NetworkEdit from '../Network/NetworkEdit'
+import Distribution from '../Distribution/Distribution'
+import DistributionEdit from '../Distribution/DistributionEdit'
+import Umbrella from '../Umbrella/Umbrella'
+import UmbrellaEdit from '../Umbrella/UmbrellaEdit'
+import User from '../User/User'
 import { getBreadInfo } from '../../utils'
-import request from '../../utils/request'
+import styles from './Main.less'
 
 const { Header, Content, Sider } = Layout
 const SubMenu = Menu.SubMenu
 const TabPane = Tabs.TabPane
 
-/**
- * 主程序
- * 
- * @class App
- * @extends {Component}
- */
 @inject('appStore') @withRouter @observer
-class App extends Component {
-
-  constructor(props) {
-    super(props)
-  }
+class Main extends Component {
 
   componentDidMount() {
     this.props.history.listen((location, type) => {
@@ -65,10 +51,11 @@ class App extends Component {
   }
 
   render() {
-    console.log('App be render')
-    const { isLogin, administratorInfo, logout, tabBarList } = this.props.appStore
+
+    const { administratorInfo, logout, tabBarList } = this.props.appStore
     const activeTab = tabBarList.find((item, index) => item.active === true)
-    const pageNode = (
+
+    return (
       <Layout className={styles.layoutHasSider}>
         <SiderMenu />
         <Layout>
@@ -101,6 +88,7 @@ class App extends Component {
                           <Route path="/networksEdit" component={NetworkEdit} />
                           <Route path="/distribution" component={Distribution} />
                           <Route path="/distributionEdit" component={DistributionEdit} />
+                          <Route render={() => <h1 className={styles.noMatch}>找不到此页面</h1>} />
                         </Switch>
                       </div>
                     </Content>
@@ -112,8 +100,7 @@ class App extends Component {
         </Layout>
       </Layout>
     )
-    return isLogin ? pageNode : <Login />
   }
 }
 
-export default App
+export default Main

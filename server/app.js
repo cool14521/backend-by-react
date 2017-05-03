@@ -5,7 +5,6 @@ import { devMiddleware, hotMiddleware } from 'koa-webpack-middleware'
 import path from 'path'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
-import renderHomePageAsync from './render'
 
 const router = new Router()
 const app = new Koa()
@@ -50,9 +49,30 @@ router.get('/favicon.ico', (ctx, next) => {
 
 //渲染页面
 router.get('*', async (ctx, next) => {
-	const homePage = await renderHomePageAsync()
 	ctx.type = 'html'
-	ctx.body = homePage
+	ctx.body = `<!DOCTYPE html>
+				<html lang="en">
+				<head>
+				<meta charset="UTF-8">
+				<title>mobx-demo</title>
+				<style>
+					*{
+					margin: 0;
+					padding: 0;
+					}
+					html,
+					body {
+					-webkit-tap-highlight-color: transparent;
+					height: 100%;
+					touch-action: none;
+					}
+				</style>
+				</head>
+				<body>
+				<div id="root" style="height: 100%;"></div>
+				<script src="/dist/bundle.js"></script>
+				</body>
+				</html>`
 })
 
 app.use(router.routes()).use(router.allowedMethods())
