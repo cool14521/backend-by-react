@@ -3,6 +3,8 @@
 `npm install`
 ## 2. 启动项目
 `npm start`
+## 3. 运行网页
+### 浏览器输入 `localhost:8080`
 ## 3. 打包项目
 `npm run build`
 # 介绍
