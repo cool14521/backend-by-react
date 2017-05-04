@@ -26,6 +26,18 @@ export const debounce = method => {
  */
 export const isWeixinBrowser = () => /micromessenger/.test(navigator.userAgent.toLowerCase())
 
+
+/**
+ * 判断是否为空对象
+ * @param {*} obj 
+ */
+export const isEmptyObject = obj => {
+  for (var name in obj) {
+    return false
+  }
+  return true
+}
+
 /**
  * 面包屑配置
  */
