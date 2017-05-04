@@ -7,13 +7,13 @@ import lazyMain from 'bundle-loader?lazy!./Layout/Main'
 
 console.log(process.env.NODE_ENV)
 
-const Login = ()=>(
+const Login = () => (
   <Bundle load={lazyLogin}>
     {(Login) => <Login />}
   </Bundle>
 )
 
-const Main = ()=>(
+const Main = () => (
   <Bundle load={lazyMain}>
     {(Main) => <Main />}
   </Bundle>
@@ -32,7 +32,7 @@ class App extends Component {
   }
 
   render() {
-    const {isLogin} = this.props.appStore
+    const { isLogin } = this.props.appStore
     return isLogin ? <Main /> : <Login />
   }
 }

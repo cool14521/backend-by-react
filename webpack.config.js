@@ -15,13 +15,18 @@ module.exports = {
     publicPath: '/dist/'
   },
 
+  resolve: {
+    modules: [path.resolve(__dirname, 'node_modules')],//优化webpack文件搜索范围
+    extensions: ['.web.js', '.jsx', '.js', '.json']
+  },
+
   devtool: 'cheap-module-eval-source-map',//开启生成source-map文件功能便于代码调试
 
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader',
+        use: 'babel-loader?cacheDirectory',//开启编译缓存
         exclude: /node_modules/
       },
       {

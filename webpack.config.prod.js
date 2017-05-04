@@ -20,10 +20,11 @@ module.exports = {
     publicPath: '/'
   },
 
-  // resolve: {
-  //   modules: ['node_modules'],
-  //   extensions: ['.web.js', '.jsx', '.js', '.json']
-  // },
+  resolve: {
+    modules: [path.resolve(__dirname, 'node_modules')],//优化webpack文件搜索范围
+    mainFields: ['jsnext:main', 'main'],//优化支持tree-shaking的库
+    extensions: ['.web.js', '.jsx', '.js', '.json']
+  },
 
   //devtool: 'cheap-module-eval-source-map',//生产环境需关闭该功能,否则打包后体积会变大
 
@@ -68,17 +69,24 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
-    new webpack.optimize.UglifyJsPlugin({//压缩文件
-      compress: { warnings: false }
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,//最紧凑的输出
+      comments: false,//删除注释
+      compress: {
+        warnings: false,//在UglifyJs删除没有用到的代码时不输出警告
+        drop_console: true,//删除所有console语句
+        collapse_vars: true,//内嵌定义了但是只用到一次的变量
+        reduce_vars: true,// 提取出出现多次但是没有定义成变量去引用的静态值
+      }
     }),
     new HtmlWebpackPlugin({//自动生成html
       template: './src/views/index.html'
     }),
     new ExtractTextPlugin({
-      filename:(getPath) => {
+      filename: (getPath) => {
         return getPath('[name].css').replace('dist/js', 'css')
       },
-      allChunks:true
+      allChunks: true
     }),//提取css文件
     new webpack.LoaderOptionsPlugin({
       options: {
