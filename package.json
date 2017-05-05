@@ -31,7 +31,7 @@
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.1.1",
-    "koa-webpack-middleware": "^1.0.3",
+    "koa-webpack-middleware": "1.0.3",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
     "mobx-react-devtools": "^4.2.11",
