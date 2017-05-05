@@ -5,8 +5,6 @@ import Bundle from '../components/Common/Bundle'
 import lazyLogin from 'bundle-loader?lazy!./Layout/Login'
 import lazyMain from 'bundle-loader?lazy!./Layout/Main'
 
-console.log(process.env.NODE_ENV)
-
 const Login = () => (
   <Bundle load={lazyLogin}>
     {(Login) => <Login />}
@@ -18,9 +16,6 @@ const Main = () => (
     {(Main) => <Main />}
   </Bundle>
 )
-
-//console.log(Login)
-
 
 @inject('appStore') @withRouter @observer
 class App extends Component {

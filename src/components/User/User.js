@@ -56,6 +56,7 @@ class User extends Component {
             showTime
             format="YYYY-MM-DD HH:mm:ss"
             placeholder="结束时间"
+            onChange={(e, dataString) => { console.log(dataString) }}
           />
           <label>昵称：</label>
           <Input placeholder="请输入昵称" style={{ width: 200 }} />
