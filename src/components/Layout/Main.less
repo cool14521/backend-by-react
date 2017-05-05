@@ -10,6 +10,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    :global(.ant-layout-content){
+        height: 90%;
+    }
 }
 
 .header :global(.ant-menu-root)>li {
@@ -72,7 +75,6 @@
         height: calc(~"100% - 33px");
          :global(.ant-tabs-tabpane-active) {
             height: 100%;
-            overflow-y: scroll;
         }
     }
 }
