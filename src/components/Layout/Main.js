@@ -74,7 +74,7 @@ class Main extends Component {
               tabBarList.map((item, index) => {
                 return (
                   <TabPane tab={item.title} key={item.pathname} >
-                    <Content style={{ margin: '0 16px' }} className={styles.contentWrapper}>
+                    {activeTab.pathname===item.pathname?(<Content style={{ margin: '0 16px' }} className={styles.contentWrapper}>
                       <Breadcrumb style={{ margin: '12px 0' }}>
                         {getBreadInfo(this.props.location.pathname).map((item, index) => <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>)}
                       </Breadcrumb>
@@ -91,7 +91,7 @@ class Main extends Component {
                           <Route render={() => <h1 className={styles.noMatch}>找不到此页面</h1>} />
                         </Switch>
                       </div>
-                    </Content>
+                    </Content>):''}
                   </TabPane>
                 )
               })
