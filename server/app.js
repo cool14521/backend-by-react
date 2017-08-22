@@ -8,6 +8,7 @@ import bodyParser from 'koa-bodyparser'
 
 var Mock = require('mockjs')
 const router = new Router()
+
 const app = new Koa()
 const compile = webpack(webpackConfig)
 
@@ -32,18 +33,10 @@ app.use(hotMiddleware(compile, {
 	// heartbeat: 10 * 1000
 }))
 
-//模拟登录接口
-router.post('/login', async (ctx, next) => {
-	await new Promise((resolve, reject) => {
-		setTimeout(resolve, 3000)
-	})
-	console.log(ctx.request.body)
-	ctx.body = {
-		errorcode: 0,
-		errormsg: '登录成功'
-	}
-})
-router.get('/test', async (ctx, next) => {
+
+//mock 接口部分
+const prefix='/api/v1'
+router.get(prefix+'/test', async (ctx, next) => {
 	// await new Promise((resolve, reject) => {
 	// 	setTimeout(resolve, 3000)
 	// })
@@ -52,7 +45,7 @@ router.get('/test', async (ctx, next) => {
 
 	var data = Mock.mock({
 	    // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
-	    'list|1-10': [{
+	    'list|10-100': [{
 	        // 属性 id 是一个自增数，起始值为 1，每次增 1
 	        'id|+1': 1
 	    }]
@@ -64,6 +57,17 @@ router.get('/test', async (ctx, next) => {
 	ctx.body =  data
 })
 
+//模拟登录接口
+router.post('/login', async (ctx, next) => {
+	await new Promise((resolve, reject) => {
+		setTimeout(resolve, 3000)
+	})
+	console.log(ctx.request.body)
+	ctx.body = {
+		errorcode: 0,
+		errormsg: '登录成功'
+	}
+});
 
 router.get('/favicon.ico', (ctx, next) => {
 	ctx.body = null
@@ -97,7 +101,9 @@ router.get('*', async (ctx, next) => {
 				</html>`
 })
 
-app.use(router.routes()).use(router.allowedMethods())
+
+app.use(router.routes()).use(router.allowedMethods());
+
 
 app.listen(8080)
 console.log('app started at port 8080...')
