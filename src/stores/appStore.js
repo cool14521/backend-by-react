@@ -17,7 +17,18 @@ class appStore {
       name: 'sundaypig',
       level: 3
     }
-    this.isLogin = false
+
+    if(localStorage.getItem("isLogin")){
+    //  console.log(localStorage.getItem("isLogin"))
+     this.isLogin = true;
+     localStorage.setItem("isLogin",true);
+    }else{
+     this.isLogin = false;
+     localStorage.setItem("isLogin",false);
+
+    }
+
+
     this.collapsed = false
     this.siderMode = 'inline'
     this.loading = false
@@ -49,6 +60,7 @@ class appStore {
       const data = await login(values)
       runInAction(() => {
         this.isLogin = true
+        localStorage.setItem("isLogin",true);
       })
     }
     catch (error) {
@@ -57,7 +69,8 @@ class appStore {
   }
 
   @action.bound logout() {
-    this.isLogin = false
+    this.isLogin = false;
+    localStorage.setItem("isLogin",false);
   }
 
   @action showLoading() {

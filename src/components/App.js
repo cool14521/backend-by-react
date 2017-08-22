@@ -28,6 +28,7 @@ class App extends Component {
 
   render() {
     const { isLogin } = this.props.appStore
+    console.log(isLogin);
     return isLogin ? <Main /> : <Login />
   }
 }

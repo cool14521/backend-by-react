@@ -46,7 +46,7 @@ class SiderMenu extends Component {
         collapsed={appStore.collapsed}
         onCollapse={appStore.onCollapse}
       >
-        <div className={styles.logo} style={{ visibility: appStore.collapsed ? 'hidden' : 'visible' }}>雨伞分享管理</div>
+        <div className={styles.logo} style={{ visibility: appStore.collapsed ? 'hidden' : 'visible' }}>后台管理</div>
         <Menu
           theme="dark"
           mode={appStore.siderMode}
@@ -55,6 +55,7 @@ class SiderMenu extends Component {
           defaultOpenKeys={['数据管理']}
           onClick={this.onSiderClick.bind(this)}
         >
+          
           <SubMenu
             key="数据管理"
             title={<span><Icon type="user" /><span className="nav-text">数据管理</span></span>}
@@ -64,6 +65,9 @@ class SiderMenu extends Component {
             <Menu.Item key="/networks">网点管理</Menu.Item>
             <Menu.Item key="/distribution">分配管理</Menu.Item>
           </SubMenu>
+
+
+
         </Menu>
       </Sider>
     )

@@ -6,6 +6,7 @@ import path from 'path'
 import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 
+var Mock = require('mockjs')
 const router = new Router()
 const app = new Koa()
 const compile = webpack(webpackConfig)
@@ -42,6 +43,27 @@ router.post('/login', async (ctx, next) => {
 		errormsg: '登录成功'
 	}
 })
+router.get('/test', async (ctx, next) => {
+	// await new Promise((resolve, reject) => {
+	// 	setTimeout(resolve, 3000)
+	// })
+	//console.log(ctx.request.body)
+	// 使用 Mock
+
+	var data = Mock.mock({
+	    // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
+	    'list|1-10': [{
+	        // 属性 id 是一个自增数，起始值为 1，每次增 1
+	        'id|+1': 1
+	    }]
+	})
+	// 输出结果
+	//console.log(JSON.stringify(data, null, 4))
+
+
+	ctx.body =  data
+})
+
 
 router.get('/favicon.ico', (ctx, next) => {
 	ctx.body = null
