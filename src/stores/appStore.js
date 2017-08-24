@@ -39,7 +39,7 @@ class appStore {
           : window.location.pathname,
         active: true,
         title: window.location.pathname === '/'
-          ? 'Dashboard'
+          ? '首页'
           : getPathName(window.location.pathname)
       }
     ]

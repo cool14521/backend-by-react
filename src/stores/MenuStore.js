@@ -3,7 +3,7 @@ export const MenuInfo = [
   {
     id: '2',
     icon: 'laptop',
-    name: 'Dashboard',
+    name: '首页',
     path: '/dashboard'
   }, {
     id: '3',
@@ -51,7 +51,7 @@ export const getPathName = (path) => {
   if (lodash.has(PathName, 'name')) {
     return PathName.name
   } else {
-    return ""
+    return '+'
   }
 
 }
