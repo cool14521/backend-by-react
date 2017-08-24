@@ -1,8 +1,9 @@
-import { observable, action, computed, runInAction } from "mobx"
+import {observable, action, computed, runInAction} from "mobx"
 
-import { login } from '../services/app'
-import { getBreadInfo } from '../utils'
+import {login} from '../services/app'
+import {getBreadInfo} from '../utils'
 
+import {getPathName} from './MenuStore'
 class appStore {
 
   @observable administratorInfo
@@ -18,21 +19,30 @@ class appStore {
       level: 3
     }
 
-    if(localStorage.getItem("isLogin")){
-    //  console.log(localStorage.getItem("isLogin"))
-     this.isLogin = true;
-     localStorage.setItem("isLogin",true);
-    }else{
-     this.isLogin = false;
-     localStorage.setItem("isLogin",false);
+    if (localStorage.getItem("isLogin")) {
+      //  console.log(localStorage.getItem("isLogin"))
+      this.isLogin = true;
+      localStorage.setItem("isLogin", true);
+    } else {
+      this.isLogin = false;
+      localStorage.setItem("isLogin", false);
 
     }
-
 
     this.collapsed = false
     this.siderMode = 'inline'
     this.loading = false
-    this.tabBarList = [{ pathname: window.location.pathname === '/' ? '/users' : window.location.pathname, active: true, title: getBreadInfo(window.location.pathname).reverse()[0] }]
+    this.tabBarList = [
+      {
+        pathname: window.location.pathname === '/'
+          ? '/dashboard'
+          : window.location.pathname,
+        active: true,
+        title: window.location.pathname === '/'
+          ? 'Dashboard'
+          : getPathName(window.location.pathname)
+      }
+    ]
   }
 
   @action.bound addTab(tab) {
@@ -52,7 +62,9 @@ class appStore {
 
   @action.bound onCollapse(collapsed) {
     this.collapsed = !this.collapsed
-    this.siderMode = collapsed ? 'vertical' : 'inline'
+    this.siderMode = collapsed
+      ? 'vertical'
+      : 'inline'
   }
 
   @action loginSubmit = async values => {
@@ -60,17 +72,16 @@ class appStore {
       const data = await login(values)
       runInAction(() => {
         this.isLogin = true
-        localStorage.setItem("isLogin",true);
+        localStorage.setItem("isLogin", true);
       })
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error)
     }
   }
 
   @action.bound logout() {
     this.isLogin = false;
-    localStorage.setItem("isLogin",false);
+    localStorage.setItem("isLogin", false);
   }
 
   @action showLoading() {
