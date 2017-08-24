@@ -1,5 +1,7 @@
+import React from 'react'
 import lodash from 'lodash'
 import pathToRegexp from 'path-to-regexp'
+import {Menu, Icon} from 'antd'
 
 /**
  * 数组格式转树状结构
@@ -77,4 +79,33 @@ const queryArray = (array, key, keyAlias = 'key') => {
     return item[0]
   }
   return null
+}
+
+// 递归生成菜单
+export const getMenus = (menuTreeN, siderFoldN) => {
+  const levelMap = {}
+
+  return menuTreeN.map((item) => {
+    if (item.children) {
+      if (item.pid) {
+        levelMap[item.id] = item.pid
+      }
+      return (
+        <Menu.SubMenu key={item.id} title={< span > {
+          item.icon && <Icon type={item.icon}/>
+        }
+        {
+          (!siderFoldN || !menuTree.includes(item)) && item.name
+        } < /span>}>
+          {getMenus(item.children, siderFoldN)}
+        </Menu.SubMenu>
+      )
+    }
+    return (
+      <Menu.Item key={item.path}>
+        {item.icon && <Icon type={item.icon}/>}
+        {(!siderFoldN || !menuTree.includes(item)) && item.name}
+      </Menu.Item>
+    )
+  })
 }
