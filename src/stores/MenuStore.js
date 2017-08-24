@@ -12,6 +12,12 @@ export const MenuInfo = [
     icon: 'search',
     path: '/report'
   }, {
+    id: '30',
+    pid: '3',
+    name: '平仓报表',
+    icon: 'api',
+    path: '/report/close'
+  }, {
     id: '4',
     pid: '1',
     name: '数据管理',
@@ -29,13 +35,13 @@ export const MenuInfo = [
     icon: 'database',
     path: '/umbrellas'
   }, {
-    id: '42',
+    id: '43',
     pid: '4',
     name: '网点管理',
     icon: 'api',
     path: '/networks'
   }, {
-    id: '42',
+    id: '44',
     pid: '4',
     name: '分配管理',
     icon: 'api',

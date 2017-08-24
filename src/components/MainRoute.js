@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import {observer, inject} from 'mobx-react'
 import {Route, withRouter, Switch} from 'react-router-dom'
+
+import styles from './Layout/Main.less'
+
 import Network from './Network/Network'
 import NetworkEdit from './Network/NetworkEdit'
 import Distribution from './Distribution/Distribution'
@@ -10,7 +13,7 @@ import UmbrellaEdit from './Umbrella/UmbrellaEdit'
 import User from './User/User'
 import Dashboard from './Dashboard/dashboard'
 
-import styles from './Layout/Main.less'
+import Close from './Report/Close'
 
 //主路由- 绑定URL和页面组件
 @withRouter @observer
@@ -22,6 +25,8 @@ class MainRoute extends Component {
       <Switch>
         <Route exact path="/" component={Dashboard}/>
         <Route path="/dashboard" component={Dashboard}/>
+        <Route path="/report/close" component={Close}/>
+
         <Route path="/users" component={User}/>
         <Route path="/umbrellas" component={Umbrella}/>
         <Route path="/umbrellasEdit" component={UmbrellaEdit}/>
