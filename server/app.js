@@ -7,6 +7,7 @@ import Router from 'koa-router'
 import bodyParser from 'koa-bodyparser'
 
 import test from './controller/test'
+import report from './controller/report'
 
 const router = new Router()
 const app = new Koa()
@@ -36,6 +37,8 @@ app.use(hotMiddleware(compile, {
 //mock 接口部分
 const prefix = '/api/v1'
 router.get(prefix + '/test', test.test)
+//报表
+router.get(prefix + '/report/close', report.close)
 
 //模拟登录接口
 router.post('/login', async(ctx, next) => {

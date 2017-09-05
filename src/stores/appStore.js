@@ -1,6 +1,8 @@
 import {observable, action, computed, runInAction} from "mobx"
 
 import {login} from '../services/app'
+import {getCloseReport} from '../services/report'
+
 import {getBreadInfo} from '../utils'
 
 import {getPathName} from './MenuStore'
@@ -12,13 +14,16 @@ class appStore {
   @observable collapsed
   @observable loading
   @observable tabBarList
-
+  @observable CloseReportObj
   constructor() {
     this.administratorInfo = {
       name: 'sundaypig',
       level: 3
     }
-
+    this.CloseReportObj = {
+      total: 0,
+      rows: []
+    };
     if (localStorage.getItem("isLogin")) {
       //  console.log(localStorage.getItem("isLogin"))
       this.isLogin = true;
@@ -92,6 +97,15 @@ class appStore {
     this.loading = false
   }
 
+  //获取报表
+  //The action only decorates the current function, but the callback is a nother function
+  @action GetCloseReport = async values => {
+    const data = await getCloseReport(values)
+    runInAction("update state after fetching data", () => {
+      this.CloseReportObj = data
+    })
+
+  }
 }
 
 export default new appStore()
